@@ -5,8 +5,6 @@ namespace Shopware\Core;
 use Doctrine\DBAL\Connection;
 use Shopware\Core\DevOps\Environment\EnvironmentHelper;
 use Shopware\Core\Framework\Adapter\Database\MySQLFactory;
-use Shopware\Core\Framework\Api\Controller\FallbackController;
-use Shopware\Core\Framework\Log\Package;
 use Shopware\Core\Framework\Migration\MigrationStep;
 use Shopware\Core\Framework\Plugin\KernelPluginLoader\KernelPluginLoader;
 use Shopware\Core\Framework\Util\VersionParser;
@@ -19,17 +17,13 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 use Symfony\Component\HttpKernel\Kernel as HttpKernel;
 use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
-use Symfony\Component\Routing\Route;
 
-#[Package('core')]
 class Kernel extends HttpKernel
 {
     use MicroKernelTrait;
 
     /**
      * @internal
-     *
-     * @deprecated tag:v6.5.0 The connection requirements should be fixed
      */
     public const PLACEHOLDER_DATABASE_URL = 'mysql://_placeholder.test';
 
@@ -97,8 +91,6 @@ class Kernel extends HttpKernel
 
     /**
      * @return \Generator<BundleInterface>
-     *
-     * @deprecated tag:v6.5.0 - reason:return-type-change -  The return type will be native
      */
     public function registerBundles()/*: \Generator*/
     {
@@ -115,7 +107,6 @@ class Kernel extends HttpKernel
             }
         }
 
-        /* @deprecated tag:v6.5.0 Maintenance bundle need to be added to config/bundles.php file */
         if (!\in_array('Maintenance', $instanciatedBundleNames, true)) {
             yield new Maintenance();
         }
@@ -125,8 +116,6 @@ class Kernel extends HttpKernel
 
     /**
      * @return string
-     *
-     * @deprecated tag:v6.5.0 - reason:return-type-change - The return type will be native
      */
     public function getProjectDir()/*: string*/
     {
@@ -279,9 +268,7 @@ class Kernel extends HttpKernel
         $routes->import($confDir . '/{routes}' . self::CONFIG_EXTS, 'glob');
 
         $this->addBundleRoutes($routes);
-        $this->addApiRoutes($routes);
         $this->addBundleOverwrites($routes);
-        $this->addFallbackRoute($routes);
     }
 
     /**
@@ -371,9 +358,6 @@ class Kernel extends HttpKernel
                 $connectionVariables[] = 'SET sql_mode=(SELECT REPLACE(@@sql_mode,\'ONLY_FULL_GROUP_BY\',\'\'))';
             }
 
-            /**
-             * @deprecated tag:v6.5.0 - old trigger logic is removed, therefore we don't need all those connection variables
-             */
             $nonDestructiveMigrations = $connection->executeQuery('
                 SELECT `creation_timestamp`
                 FROM `migration`
@@ -425,11 +409,6 @@ PHP;
         ));
     }
 
-    private function addApiRoutes(RoutingConfigurator $routes): void
-    {
-        $routes->import('.', 'api');
-    }
-
     private function addBundleRoutes(RoutingConfigurator $routes): void
     {
         foreach ($this->getBundles() as $bundle) {
@@ -446,16 +425,5 @@ PHP;
                 $bundle->configureRouteOverwrites($routes, $this->environment);
             }
         }
-    }
-
-    private function addFallbackRoute(RoutingConfigurator $routes): void
-    {
-        // detail routes
-        $route = new Route('/');
-        $route->setMethods(['GET']);
-        $route->setDefault('_controller', FallbackController::class . '::rootFallback');
-        $route->setDefault(PlatformRequest::ATTRIBUTE_ROUTE_SCOPE, ['storefront']);
-
-        $routes->add('root.fallback', $route->getPath());
     }
 }

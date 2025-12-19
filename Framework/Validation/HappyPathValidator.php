@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopware\Core\Framework\Validation;
 
-use Shopware\Core\Framework\Log\Package;
 use Shopware\Core\Framework\Validation\Constraint\Uuid;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\Collection;
@@ -21,7 +20,6 @@ use Symfony\Component\Validator\Mapping\MetadataInterface;
 use Symfony\Component\Validator\Validator\ContextualValidatorInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-#[Package('core')]
 class HappyPathValidator implements ValidatorInterface
 {
     private ValidatorInterface $inner;

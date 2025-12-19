@@ -2,7 +2,6 @@
 
 namespace Shopware\Core\Framework\Struct\Serializer;
 
-use Shopware\Core\Framework\Log\Package;
 use Shopware\Core\Framework\Struct\Struct;
 use Symfony\Component\Serializer\Encoder\JsonDecode;
 use Symfony\Component\Serializer\Encoder\JsonEncode;
@@ -10,7 +9,6 @@ use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
-#[Package('core')]
 class StructNormalizer implements DenormalizerInterface, NormalizerInterface
 {
     /**

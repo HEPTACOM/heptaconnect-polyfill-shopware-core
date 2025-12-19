@@ -1,16 +1,14 @@
-Core Component
-==============
+# heptacom/heptaconnect-polyfill-shopware-core
 
-The Core component is the e-commerce core for Shopware. It includes an administrative API in PHP and via Rest.
+This package is a fork of `shopware/core:6.4.20.2`.
+Most of the code is removed.
+What remains is a barebones package, containing only code that is used by a `heptacom/heptaconnect-*` package.
 
-This repository is considered **read-only**. Please send pull requests
-to our [main Shopware repository](https://github.com/shopware/platform). 
+Composer dependencies are raised, removed or loosened in order to allow upgrading transitive dependencies.
+This is necessary, because the original `shopware/core` package has strict constraints that don't allow upgrades.
+Over time, some transitive dependencies have accured security vulnerabilities, so upgrading them is essential.
 
-Resources
----------
+In addition, this allows for a smaller vendor directory.
+It also allows for removal of obsolete services and database tables.
 
-  * [Documentation](https://developers.shopware.com)
-  * [Contributing](https://developers.shopware.com/community/contributing-code/)
-  * [Report issues](https://github.com/shopware/platform/issues) and
-    [send Pull Requests](https://github.com/shopware/platform/pulls)
-    in the [main Shopware repository](https://github.com/shopware/platform)
+DO NOT INSTALL THIS IN A SHOPWARE PROJECT!

@@ -6,10 +6,8 @@ use Composer\IO\IOInterface;
 use Composer\Package\CompletePackageInterface;
 use Composer\Package\Loader\ValidatingArrayLoader;
 use Composer\Util\ConfigValidator;
-use Shopware\Core\Framework\Log\Package;
 use Shopware\Core\Framework\Plugin\Exception\PluginComposerJsonInvalidException;
 
-#[Package('core')]
 class PackageProvider
 {
     /**

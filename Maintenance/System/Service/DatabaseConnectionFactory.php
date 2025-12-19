@@ -5,11 +5,9 @@ namespace Shopware\Core\Maintenance\System\Service;
 use Doctrine\DBAL\Configuration;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DriverManager;
-use Shopware\Core\Framework\Log\Package;
 use Shopware\Core\Maintenance\System\Exception\DatabaseSetupException;
 use Shopware\Core\Maintenance\System\Struct\DatabaseConnectionInformation;
 
-#[Package('core')]
 class DatabaseConnectionFactory
 {
     /**

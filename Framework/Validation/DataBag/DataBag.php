@@ -2,11 +2,9 @@
 
 namespace Shopware\Core\Framework\Validation\DataBag;
 
-use Shopware\Core\Framework\Log\Package;
 use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 use Symfony\Component\HttpFoundation\ParameterBag;
 
-#[Package('core')]
 class DataBag extends ParameterBag
 {
     /**

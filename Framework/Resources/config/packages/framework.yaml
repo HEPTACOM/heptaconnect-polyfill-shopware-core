@@ -7,7 +7,6 @@ framework:
     esi: true
     trusted_hosts: ~
     fragments: ~
-    assets: ~
     session:
         name: 'session-'
         handler_id: ~
@@ -20,9 +19,6 @@ framework:
         enable_annotations: true
     default_locale:  en_GB
     http_method_override: true
-    mailer:
-        message_bus: false
-        dsn: '%env(MAILER_URL)%'
     php_errors:
         log: true
     cache:
@@ -49,8 +45,6 @@ framework:
         default_bus: messenger.bus.shopware
         buses:
             messenger.bus.shopware:
-                middleware:
-                    - Shopware\Core\Framework\MessageQueue\Middleware\RetryMiddleware
 
 sensio_framework_extra:
     router:

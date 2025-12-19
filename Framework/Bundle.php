@@ -2,11 +2,8 @@
 
 namespace Shopware\Core\Framework;
 
-use Shopware\Core\Framework\Adapter\Asset\AssetPackageService;
 use Shopware\Core\Framework\Adapter\Filesystem\PrefixFilesystem;
 use Shopware\Core\Framework\DependencyInjection\CompilerPass\AddCoreMigrationPathCompilerPass;
-use Shopware\Core\Framework\DependencyInjection\CompilerPass\BusinessEventRegisterCompilerPass;
-use Shopware\Core\Framework\Log\Package;
 use Shopware\Core\Framework\Migration\MigrationSource;
 use Shopware\Core\Kernel;
 use Symfony\Component\Config\FileLocator;
@@ -23,7 +20,6 @@ use Symfony\Component\HttpKernel\Bundle\Bundle as SymfonyBundle;
 use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 use Symfony\Component\Serializer\NameConverter\CamelCaseToSnakeCaseNameConverter;
 
-#[Package('core')]
 abstract class Bundle extends SymfonyBundle
 {
     public function build(ContainerBuilder $container): void
@@ -33,14 +29,10 @@ abstract class Bundle extends SymfonyBundle
         $this->registerContainerFile($container);
         $this->registerMigrationPath($container);
         $this->registerFilesystem($container, 'private');
-        $this->registerFilesystem($container, 'public');
-        $this->registerEvents($container);
     }
 
     public function boot(): void
     {
-        $this->container->get(AssetPackageService::class)->addAssetPackage($this->getName(), $this->getPath());
-
         parent::boot();
     }
 
@@ -117,16 +109,8 @@ abstract class Bundle extends SymfonyBundle
             ->addTag('shopware.migration_source');
     }
 
-    /**
-     * @deprecated tag:v6.5.0 - Use own migration source instead
-     */
     protected function addCoreMigrationPath(ContainerBuilder $container, string $path, string $namespace): void
     {
-        Feature::triggerDeprecationOrThrow(
-            'v6.5.0.0',
-            Feature::deprecatedMethodMessage(__CLASS__, __METHOD__, 'v6.5.0.0')
-        );
-
         $container->addCompilerPass(new AddCoreMigrationPathCompilerPass($path, $namespace));
     }
 
@@ -148,17 +132,6 @@ abstract class Bundle extends SymfonyBundle
         $container->setDefinition($serviceId, $filesystem);
     }
 
-    private function registerEvents(ContainerBuilder $container): void
-    {
-        $classes = $this->getActionEventClasses();
-
-        if ($classes === []) {
-            return;
-        }
-
-        $container->addCompilerPass(new BusinessEventRegisterCompilerPass($classes));
-    }
-
     /**
      * Looks for service definition files inside the `Resources/config`
      * directory and loads either xml or yml files.
@@ -175,12 +148,6 @@ abstract class Bundle extends SymfonyBundle
 
         foreach ($this->getServicesFilePathArray($this->getPath() . '/Resources/config/services.*') as $path) {
             $delegatingLoader->load($path);
-        }
-
-        if ($container->getParameter('kernel.environment') === 'test') {
-            foreach ($this->getServicesFilePathArray($this->getPath() . '/Resources/config/services_test.*') as $testPath) {
-                $delegatingLoader->load($testPath);
-            }
         }
     }
 

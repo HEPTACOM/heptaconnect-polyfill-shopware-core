@@ -2,13 +2,11 @@
 
 namespace Shopware\Core\Framework\Migration\Command;
 
-use Shopware\Core\Framework\Log\Package;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-#[Package('core')]
 class RefreshMigrationCommand extends Command
 {
     protected static $defaultName = 'database:refresh-migration';
@@ -16,6 +14,7 @@ class RefreshMigrationCommand extends Command
     protected function configure(): void
     {
         $this
+            ->setHidden(true)
             ->addArgument('path', InputArgument::REQUIRED, 'Path to migration file');
     }
 

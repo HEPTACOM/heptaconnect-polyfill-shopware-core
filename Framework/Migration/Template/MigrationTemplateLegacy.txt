@@ -2,9 +2,6 @@
 
 namespace %%namespace%%;
 
-/**
- * @deprecated tag:v6.5.0 - Will be deleted. Migrations are now namespaced by major version
- */
 class Migration%%timestamp%%%%name%% extends %%superclassnamespace%%\Migration%%timestamp%%%%name%%
 {
 }

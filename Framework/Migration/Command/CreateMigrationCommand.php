@@ -2,7 +2,6 @@
 
 namespace Shopware\Core\Framework\Migration\Command;
 
-use Shopware\Core\Framework\Log\Package;
 use Shopware\Core\Framework\Plugin;
 use Shopware\Core\Framework\Plugin\KernelPluginCollection;
 use Symfony\Component\Console\Command\Command;
@@ -11,7 +10,6 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-#[Package('core')]
 class CreateMigrationCommand extends Command
 {
     protected static $defaultName = 'database:create-migration';
@@ -120,9 +118,7 @@ class CreateMigrationCommand extends Command
             $legacyDirectory = $this->coreDir . '/Migration';
             $legacyNamespace = 'Shopware\\Core\\Migration';
 
-            // @deprecated tag:v6.5.0 - Only necessary until 6.5.0.0
             $output->writeln('Creating legacy core migration ...');
-            // @deprecated tag:v6.5.0 - Only necessary until 6.5.0.0
             $this->createMigrationFile(
                 $output,
                 $legacyDirectory,

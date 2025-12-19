@@ -2,11 +2,9 @@
 
 namespace Shopware\Core\Framework\Plugin\Changelog;
 
-use Shopware\Core\Framework\Log\Package;
 use Shopware\Core\Framework\Plugin\Exception\PluginChangelogInvalidException;
 use Symfony\Component\Finder\Finder;
 
-#[Package('core')]
 class ChangelogService
 {
     private const FALLBACK_LOCALE = 'en-GB';

@@ -3,11 +3,9 @@
 namespace Shopware\Core\Framework\Plugin\Context;
 
 use Shopware\Core\Framework\Context;
-use Shopware\Core\Framework\Log\Package;
 use Shopware\Core\Framework\Migration\MigrationCollection;
 use Shopware\Core\Framework\Plugin;
 
-#[Package('core')]
 class UninstallContext extends InstallContext
 {
     /**

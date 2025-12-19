@@ -2,11 +2,9 @@
 
 namespace Shopware\Core\Framework\Plugin\Event;
 
-use Shopware\Core\Framework\Log\Package;
 use Shopware\Core\Framework\Plugin\Context\UpdateContext;
 use Shopware\Core\Framework\Plugin\PluginEntity;
 
-#[Package('core')]
 class PluginPostUpdateEvent extends PluginLifecycleEvent
 {
     /**

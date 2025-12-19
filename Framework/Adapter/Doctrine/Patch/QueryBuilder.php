@@ -11,7 +11,6 @@ use Doctrine\DBAL\Query\Expression\ExpressionBuilder;
 use Doctrine\DBAL\Result;
 use Doctrine\DBAL\Types\Type;
 use Doctrine\Deprecations\Deprecation;
-use Shopware\Core\Framework\Log\Package;
 use function array_filter;
 use function array_keys;
 use function array_unshift;
@@ -24,7 +23,6 @@ if (class_exists('\Doctrine\DBAL\Query\QueryBuilder', false)) {
     return;
 }
 
-#[Package('core')]
 class QueryBuilder
 {
     /*

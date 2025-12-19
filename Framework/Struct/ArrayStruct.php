@@ -2,15 +2,12 @@
 
 namespace Shopware\Core\Framework\Struct;
 
-use Shopware\Core\Framework\Log\Package;
-
 /**
  * @template-covariant TKey
  * @template-covariant TValue
  *
  * @implements \ArrayAccess<string, mixed>
  */
-#[Package('core')]
 class ArrayStruct extends Struct implements \ArrayAccess
 {
     /**
@@ -34,18 +31,12 @@ class ArrayStruct extends Struct implements \ArrayAccess
         return \array_key_exists($property, $this->data);
     }
 
-    /**
-     * @deprecated tag:v6.5.0 - reason:return-type-change - return type will be changed to bool
-     */
     #[\ReturnTypeWillChange]
     public function offsetExists($offset)/* :bool */
     {
         return \array_key_exists($offset, $this->data);
     }
 
-    /**
-     * @deprecated tag:v6.5.0 - reason:return-type-change - return type will be changed to mixed
-     */
     #[\ReturnTypeWillChange]
     public function offsetGet($offset)/* :mixed */
     {

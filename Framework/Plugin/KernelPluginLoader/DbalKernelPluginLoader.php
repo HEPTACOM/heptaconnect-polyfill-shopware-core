@@ -4,9 +4,7 @@ namespace Shopware\Core\Framework\Plugin\KernelPluginLoader;
 
 use Composer\Autoload\ClassLoader;
 use Doctrine\DBAL\Connection;
-use Shopware\Core\Framework\Log\Package;
 
-#[Package('core')]
 class DbalKernelPluginLoader extends KernelPluginLoader
 {
     /**

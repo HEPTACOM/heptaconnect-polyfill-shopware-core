@@ -9,17 +9,8 @@ use Doctrine\DBAL\DriverManager;
 use Doctrine\DBAL\Exception;
 use Shopware\Core\Framework\Adapter\Cache\CacheIdLoader;
 use Shopware\Core\Framework\Adapter\Database\MySQLFactory;
-use Shopware\Core\Framework\Event\BeforeSendRedirectResponseEvent;
-use Shopware\Core\Framework\Event\BeforeSendResponseEvent;
-use Shopware\Core\Framework\Feature;
-use Shopware\Core\Framework\Log\Package;
 use Shopware\Core\Framework\Plugin\KernelPluginLoader\DbalKernelPluginLoader;
 use Shopware\Core\Framework\Plugin\KernelPluginLoader\KernelPluginLoader;
-use Shopware\Core\Framework\Routing\CanonicalRedirectService;
-use Shopware\Core\Framework\Routing\RequestTransformerInterface;
-use Shopware\Core\Profiling\Doctrine\DebugStack;
-use Shopware\Storefront\Framework\Cache\CacheStore;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\HttpCache\HttpCache;
@@ -30,7 +21,6 @@ use Symfony\Component\HttpKernel\TerminableInterface;
 /**
  * @psalm-import-type Params from DriverManager
  */
-#[Package('core')]
 class HttpKernel
 {
     protected static ?Connection $connection = null;
@@ -64,19 +54,8 @@ class HttpKernel
         $this->debug = $debug;
     }
 
-    /**
-     * @deprecated tag:v6.5.0 - parameter `$type` will be typed to `int` and parameter `$catch` will be typed to `bool`
-     */
     public function handle(Request $request, $type = HttpKernelInterface::MASTER_REQUEST, $catch = true): HttpKernelResult
     {
-        if (!\is_int($type)) {
-            Feature::triggerDeprecationOrThrow('v6.5.0.0', 'The second parameter `$type` of `HttpKernel->handle()` will be typed to `int`');
-        }
-
-        if (!\is_bool($catch)) {
-            Feature::triggerDeprecationOrThrow('v6.5.0.0', 'The third parameter `$catch` of `HttpKernel->handle()` will be typed to `bool`');
-        }
-
         try {
             return $this->doHandle($request, (int) $type, (bool) $catch);
         } catch (Exception $e) {
@@ -128,38 +107,9 @@ class HttpKernel
         $kernel = $this->createKernel();
         $kernel->boot();
 
-        $container = $kernel->getContainer();
+        $response = $kernel->handle($request, $type, $catch);
 
-        // transform request to resolve seo urls and detect sales channel
-        $transformed = $container
-            ->get(RequestTransformerInterface::class)
-            ->transform($request);
-
-        $redirect = $container
-            ->get(CanonicalRedirectService::class)
-            ->getRedirect($transformed);
-
-        if ($redirect instanceof RedirectResponse) {
-            $event = new BeforeSendRedirectResponseEvent($transformed, $redirect);
-            $container->get('event_dispatcher')->dispatch($event);
-
-            return new HttpKernelResult($transformed, $event->getResponse());
-        }
-
-        // check for http caching
-        $enabled = $container->hasParameter('shopware.http.cache.enabled')
-            && $container->getParameter('shopware.http.cache.enabled');
-        if ($enabled && $container->has(CacheStore::class)) {
-            $kernel = new static::$httpCacheClass($kernel, $container->get(CacheStore::class), null, ['debug' => $this->debug]);
-        }
-
-        $response = $kernel->handle($transformed, $type, $catch);
-
-        // fire event to trigger runtime events like seo url headers
-        $event = new BeforeSendResponseEvent($transformed, $response);
-        $container->get('event_dispatcher')->dispatch($event);
-
-        return new HttpKernelResult($transformed, $event->getResponse());
+        return new HttpKernelResult($request, $response);
     }
 
     private function createKernel(): KernelInterface
@@ -178,13 +128,9 @@ class HttpKernel
 
         $connection = self::getConnection();
 
-        if ($this->environment !== 'prod') {
-            $connection->getConfiguration()->setSQLLogger(new DebugStack());
-        }
-
         $pluginLoader = $this->createPluginLoader($connection);
 
-        $cacheId = (new CacheIdLoader($connection))->load();
+        $cacheId = (new CacheIdLoader())->load();
 
         return $this->kernel = new static::$kernelClass(
             $this->environment,

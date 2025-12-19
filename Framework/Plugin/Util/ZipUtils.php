@@ -2,10 +2,8 @@
 
 namespace Shopware\Core\Framework\Plugin\Util;
 
-use Shopware\Core\Framework\Log\Package;
 use Shopware\Core\Framework\Plugin\Exception\PluginExtractionException;
 
-#[Package('core')]
 class ZipUtils
 {
     public static function openZip(string $filename): \ZipArchive

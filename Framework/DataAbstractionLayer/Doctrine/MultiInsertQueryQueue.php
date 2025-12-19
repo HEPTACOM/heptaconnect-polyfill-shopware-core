@@ -5,9 +5,7 @@ namespace Shopware\Core\Framework\DataAbstractionLayer\Doctrine;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\ParameterType;
 use Shopware\Core\Framework\DataAbstractionLayer\Dbal\EntityDefinitionQueryHelper;
-use Shopware\Core\Framework\Log\Package;
 
-#[Package('core')]
 class MultiInsertQueryQueue
 {
     /**

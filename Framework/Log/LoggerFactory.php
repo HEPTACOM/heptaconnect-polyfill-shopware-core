@@ -7,10 +7,9 @@ use Monolog\Logger;
 use Monolog\Processor\PsrLogMessageProcessor;
 use Psr\Log\LoggerInterface;
 
-#[Package('core')]
 class LoggerFactory
 {
-    private string $rotatingFilePathPattern = '';
+    private string $rotatingFilePathPattern;
 
     private int $defaultFileRotationCount;
 

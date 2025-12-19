@@ -6,9 +6,7 @@ use Composer\Composer;
 use Composer\Factory as ComposerFactory;
 use Composer\IO\IOInterface;
 use Composer\IO\NullIO;
-use Shopware\Core\Framework\Log\Package;
 
-#[Package('core')]
 class Factory
 {
     public static function createComposer(string $composerJsonDir, ?IOInterface $composerIO = null): Composer

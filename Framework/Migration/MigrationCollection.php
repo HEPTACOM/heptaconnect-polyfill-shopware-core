@@ -5,10 +5,8 @@ namespace Shopware\Core\Framework\Migration;
 use Doctrine\DBAL\Connection;
 use Psr\Log\LoggerInterface;
 use Shopware\Core\Framework\DataAbstractionLayer\Doctrine\MultiInsertQueryQueue;
-use Shopware\Core\Framework\Log\Package;
 use Shopware\Core\Framework\Migration\Exception\InvalidMigrationClassException;
 
-#[Package('core')]
 class MigrationCollection
 {
     /**
@@ -22,7 +20,7 @@ class MigrationCollection
 
     private MigrationRuntime $migrationRuntime;
 
-    private ?LoggerInterface $logger = null;
+    private ?LoggerInterface $logger;
 
     /**
      * @internal

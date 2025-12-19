@@ -9,10 +9,8 @@ use League\Flysystem\PluginInterface;
 use Shopware\Core\Framework\Adapter\Filesystem\Adapter\AdapterFactoryInterface;
 use Shopware\Core\Framework\Adapter\Filesystem\Exception\AdapterFactoryNotFoundException;
 use Shopware\Core\Framework\Adapter\Filesystem\Exception\DuplicateFilesystemFactoryException;
-use Shopware\Core\Framework\Log\Package;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-#[Package('core')]
 class FilesystemFactory
 {
     /**

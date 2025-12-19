@@ -4,9 +4,7 @@ namespace Shopware\Core\Framework\Adapter\Filesystem\Plugin;
 
 use League\Flysystem\FilesystemInterface;
 use League\Flysystem\PluginInterface;
-use Shopware\Core\Framework\Log\Package;
 
-#[Package('core')]
 class CopyBatch implements PluginInterface
 {
     /**

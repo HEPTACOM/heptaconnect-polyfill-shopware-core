@@ -2,13 +2,10 @@
 
 namespace Shopware\Core\Framework\Adapter\Cache;
 
-use Shopware\Core\Framework\Feature;
-use Shopware\Core\Framework\Log\Package;
 use Symfony\Component\Cache\Adapter\RedisAdapter;
 use Symfony\Component\Cache\Traits\RedisClusterProxy;
 use Symfony\Component\Cache\Traits\RedisProxy;
 
-#[Package('core')]
 class RedisConnectionFactory
 {
     /**
@@ -49,14 +46,10 @@ class RedisConnectionFactory
     }
 
     /**
-     * @deprecated tag:v6.5.0 - use create() instead
-     *
      * @return \Redis|\RedisArray|\RedisCluster|RedisClusterProxy|RedisProxy
      */
     public static function createConnection(string $dsn, array $options = [])
     {
-        Feature::triggerDeprecationOrThrow('v6.5.0.0', Feature::deprecatedMethodMessage(__CLASS__, __METHOD__, 'v6.5.0.0', 'create()'));
-
         return (new self())->create($dsn, $options);
     }
 }

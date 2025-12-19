@@ -3,7 +3,6 @@
 namespace Doctrine\DBAL\Schema;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
-use Shopware\Core\Framework\Log\Package;
 use function array_map;
 use function crc32;
 use function dechex;
@@ -19,7 +18,6 @@ if (class_exists('\Doctrine\DBAL\Schema\AbstractAsset', false)) {
     return;
 }
 
-#[Package('core')]
 abstract class AbstractAsset
 {
     /**

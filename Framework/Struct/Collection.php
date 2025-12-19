@@ -2,13 +2,10 @@
 
 namespace Shopware\Core\Framework\Struct;
 
-use Shopware\Core\Framework\Log\Package;
-
 /**
  * @template TElement
  * @implements \IteratorAggregate<array-key, TElement>
  */
-#[Package('core')]
 abstract class Collection extends Struct implements \IteratorAggregate, \Countable
 {
     /**
@@ -201,8 +198,6 @@ abstract class Collection extends Struct implements \IteratorAggregate, \Countab
     }
 
     /**
-     * @deprecated tag:v6.5.0 - reason:return-type-change - Return type will be changed to \Traversable
-     *
      * @return \Generator<TElement>
      */
     #[\ReturnTypeWillChange]

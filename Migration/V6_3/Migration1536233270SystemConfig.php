@@ -3,13 +3,8 @@
 namespace Shopware\Core\Migration\V6_3;
 
 use Doctrine\DBAL\Connection;
-use Shopware\Core\Framework\Log\Package;
 use Shopware\Core\Framework\Migration\MigrationStep;
 
-/**
- * @deprecated tag:v6.5.0 - reason:becomes-internal - Migrations will be internal in v6.5.0
- */
-#[Package('core')]
 class Migration1536233270SystemConfig extends MigrationStep
 {
     public function getCreationTimestamp(): int
@@ -28,8 +23,7 @@ class Migration1536233270SystemConfig extends MigrationStep
                 `created_at` DATETIME(3) NOT NULL,
                 `updated_at` DATETIME(3) NULL,
                 PRIMARY KEY (`id`),
-                CONSTRAINT `json.system_config.configuration_value` CHECK (JSON_VALID(`configuration_value`)),
-                CONSTRAINT `uniq.system_config.configuration_key__sales_channel_id` UNIQUE (`configuration_key`, `sales_channel_id`)
+                CONSTRAINT `json.system_config.configuration_value` CHECK (JSON_VALID(`configuration_value`))
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 SQL;
 

@@ -2,9 +2,6 @@
 
 namespace Shopware\Core\Framework\Util;
 
-use Shopware\Core\Framework\Log\Package;
-
-#[Package('core')]
 class ArrayNormalizer
 {
     public static function flatten(iterable $input): array

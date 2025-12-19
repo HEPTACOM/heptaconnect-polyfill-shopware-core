@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Shopware\Core\Framework\Util;
 
-use Shopware\Core\Framework\Log\Package;
-
-#[Package('core')]
 class HtmlSanitizer
 {
     /**

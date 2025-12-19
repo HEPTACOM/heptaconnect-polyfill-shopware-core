@@ -2,18 +2,14 @@
 
 namespace Shopware\Core\Framework\Plugin;
 
-use Shopware\Core\Checkout\Payment\PaymentMethodCollection;
-use Shopware\Core\Framework\DataAbstractionLayer\Entity;
-use Shopware\Core\Framework\DataAbstractionLayer\EntityCustomFieldsTrait;
-use Shopware\Core\Framework\DataAbstractionLayer\EntityIdTrait;
-use Shopware\Core\Framework\Log\Package;
-use Shopware\Core\Framework\Plugin\Aggregate\PluginTranslation\PluginTranslationCollection;
+use Shopware\Core\Framework\Struct\Struct;
 
-#[Package('core')]
-class PluginEntity extends Entity
+class PluginEntity extends Struct
 {
-    use EntityIdTrait;
-    use EntityCustomFieldsTrait;
+    /**
+     * @var string
+     */
+    protected $id;
 
     /**
      * @var string
@@ -81,8 +77,6 @@ class PluginEntity extends Entity
     protected $upgradedAt;
 
     /**
-     * @deprecated tag:v6.5.0 - Will be internal from 6.5.0 onward
-     *
      * @var string|null
      */
     protected $iconRaw;
@@ -118,257 +112,9 @@ class PluginEntity extends Entity
     protected $changelog;
 
     /**
-     * @var PluginTranslationCollection|null
-     */
-    protected $translations;
-
-    /**
-     * @var PaymentMethodCollection|null
-     */
-    protected $paymentMethods;
-
-    /**
      * @var array
      */
     protected $autoload;
-
-    public function getBaseClass(): string
-    {
-        return $this->baseClass;
-    }
-
-    public function setBaseClass(string $baseClass): void
-    {
-        $this->baseClass = $baseClass;
-    }
-
-    public function getName(): string
-    {
-        return $this->name;
-    }
-
-    public function setName(string $name): void
-    {
-        $this->name = $name;
-    }
-
-    public function getComposerName(): ?string
-    {
-        return $this->composerName;
-    }
-
-    public function setComposerName(string $composerName): void
-    {
-        $this->composerName = $composerName;
-    }
-
-    public function getActive(): bool
-    {
-        return $this->active;
-    }
-
-    public function setActive(bool $active): void
-    {
-        $this->active = $active;
-    }
-
-    public function getManagedByComposer(): bool
-    {
-        return $this->managedByComposer;
-    }
-
-    public function setManagedByComposer(bool $managedByComposer): void
-    {
-        $this->managedByComposer = $managedByComposer;
-    }
-
-    public function getPath(): ?string
-    {
-        return $this->path;
-    }
-
-    public function setPath(string $path): void
-    {
-        $this->path = $path;
-    }
-
-    public function getAuthor(): ?string
-    {
-        return $this->author;
-    }
-
-    public function setAuthor(string $author): void
-    {
-        $this->author = $author;
-    }
-
-    public function getCopyright(): ?string
-    {
-        return $this->copyright;
-    }
-
-    public function setCopyright(string $copyright): void
-    {
-        $this->copyright = $copyright;
-    }
-
-    public function getLicense(): ?string
-    {
-        return $this->license;
-    }
-
-    public function setLicense(string $license): void
-    {
-        $this->license = $license;
-    }
-
-    public function getVersion(): string
-    {
-        return $this->version;
-    }
-
-    public function setVersion(string $version): void
-    {
-        $this->version = $version;
-    }
-
-    public function getUpgradeVersion(): ?string
-    {
-        return $this->upgradeVersion;
-    }
-
-    public function setUpgradeVersion(?string $upgradeVersion): void
-    {
-        $this->upgradeVersion = $upgradeVersion;
-    }
-
-    public function getInstalledAt(): ?\DateTimeInterface
-    {
-        return $this->installedAt;
-    }
-
-    public function setInstalledAt(?\DateTimeInterface $installedAt): void
-    {
-        $this->installedAt = $installedAt;
-    }
-
-    public function getUpgradedAt(): ?\DateTimeInterface
-    {
-        return $this->upgradedAt;
-    }
-
-    public function setUpgradedAt(\DateTimeInterface $upgradedAt): void
-    {
-        $this->upgradedAt = $upgradedAt;
-    }
-
-    /**
-     * @deprecated tag:v6.5.0 - reason:becomes-internal - Will be internal from 6.5.0 onward
-     */
-    public function getIconRaw(): ?string
-    {
-        $this->checkIfPropertyAccessIsAllowed('iconRaw');
-
-        return $this->iconRaw;
-    }
-
-    /**
-     * @deprecated tag:v6.5.0 - reason:becomes-internal - Will be internal from 6.5.0 onward
-     */
-    public function setIconRaw(string $iconRaw): void
-    {
-        $this->iconRaw = $iconRaw;
-    }
-
-    public function getIcon(): ?string
-    {
-        return $this->icon;
-    }
-
-    public function setIcon(string $icon): void
-    {
-        $this->icon = $icon;
-    }
-
-    public function getLabel(): string
-    {
-        return $this->label;
-    }
-
-    public function setLabel(string $label): void
-    {
-        $this->label = $label;
-    }
-
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    public function setDescription(string $description): void
-    {
-        $this->description = $description;
-    }
-
-    public function getManufacturerLink(): ?string
-    {
-        return $this->manufacturerLink;
-    }
-
-    public function setManufacturerLink(string $manufacturerLink): void
-    {
-        $this->manufacturerLink = $manufacturerLink;
-    }
-
-    public function getSupportLink(): ?string
-    {
-        return $this->supportLink;
-    }
-
-    public function setSupportLink(string $supportLink): void
-    {
-        $this->supportLink = $supportLink;
-    }
-
-    public function getChangelog(): ?array
-    {
-        return $this->changelog;
-    }
-
-    public function setChangelog(array $changelog): void
-    {
-        $this->changelog = $changelog;
-    }
-
-    public function getTranslations(): ?PluginTranslationCollection
-    {
-        return $this->translations;
-    }
-
-    public function setTranslations(PluginTranslationCollection $translations): void
-    {
-        $this->translations = $translations;
-    }
-
-    public function getPaymentMethods(): ?PaymentMethodCollection
-    {
-        return $this->paymentMethods;
-    }
-
-    public function setPaymentMethods(PaymentMethodCollection $paymentMethods): void
-    {
-        $this->paymentMethods = $paymentMethods;
-    }
-
-    public function getAutoload(): array
-    {
-        return $this->autoload;
-    }
-
-    public function setAutoload(array $autoload): void
-    {
-        $this->autoload = $autoload;
-    }
 
     public function jsonSerialize(): array
     {
