@@ -51,6 +51,7 @@ class Framework extends Bundle
         $this->buildConfig($container, $environment);
 
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/DependencyInjection/'));
+        $loader->load('heptaconnect.xml');
         $loader->load('services.xml');
         $loader->load('api.xml');
         $loader->load('filesystem.xml');
