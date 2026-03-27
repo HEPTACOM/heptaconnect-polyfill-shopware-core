@@ -55,6 +55,7 @@
         "psr/log": "^1.1.2",
         "sensio/framework-extra-bundle": "^6.2.1",
         "shopware/conflicts": "*",
+        "shopware/core": "6.4.20.2",
         "squirrelphp/twig-php-syntax": "^1.7.0",
         "sroze/messenger-enqueue-transport": "^0.4.0",
         "symfony/cache": "^5.4.0",
